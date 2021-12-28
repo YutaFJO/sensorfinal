@@ -1219,6 +1219,17 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
                 controller.moveSprite(mySprite, 100, 100)
                 LookParts = 0
             }
+        } else if (mySprite.overlapsWith(HintBoard)) {
+            if (LookNumBoard == 0) {
+                CMaterHint = sprites.create(assets.image`MaterHint`, SpriteKind.Info)
+                CMaterHint.setPosition(mySprite.x, mySprite.y + 10)
+                controller.moveSprite(mySprite, 0, 0)
+                LookNumBoard = 1
+            } else {
+                CMaterHint.destroy()
+                controller.moveSprite(mySprite, 100, 100)
+                LookNumBoard = 0
+            }
         }
     }
 })
@@ -1233,6 +1244,8 @@ let Cat: Sprite = null
 let Hose: Sprite = null
 let Scribble: Sprite = null
 let FloorPanels: Sprite = null
+let CMaterHint: Sprite = null
+let LookNumBoard = 0
 let AmidaParts: Sprite = null
 let LookParts = 0
 let Amida: Sprite = null
@@ -1241,6 +1254,7 @@ let FloorMap: Sprite = null
 let LookMap = 0
 let Faucet: Sprite = null
 let LookFaucet = 0
+let HintBoard: Sprite = null
 let AnotherBoard: Sprite = null
 let LightEffect: Sprite = null
 let CardC: Sprite = null
@@ -1589,6 +1603,25 @@ forever(function () {
         Locker.setPosition(233, 123)
         CircleMater = sprites.create(assets.image`CMater1`, SpriteKind.Info)
         CircleMater.setPosition(232, 48)
+        HintBoard = sprites.create(img`
+            f f f f f f f f f f f f f f f f 
+            f a a a a a a a a a a a a a a f 
+            f a 7 7 7 7 7 7 7 7 7 7 7 7 a f 
+            f a 7 d d c d d d d c d d 7 a f 
+            f a 7 c c c c c c c c c c 7 a f 
+            f a 7 d d c d d d d c d d 7 a f 
+            f a 7 c c c c c c c c c c 7 a f 
+            f a 7 d d c d d d d c d d 7 a f 
+            f a 7 7 7 7 7 7 7 7 7 7 7 7 a f 
+            f a a a a a a a a a a a a a a f 
+            f f f f f f f a a f f f f f f f 
+            . . . . . . f a a f . . . . . . 
+            . . . . f f f a a f f f . . . . 
+            . . . f f a a a a a a f f . . . 
+            . . . f a a a a a a a a f . . . 
+            . . . f f f f f f f f f f . . . 
+            `, SpriteKind.Object)
+        HintBoard.setPosition(200, 16)
         Mark4F = sprites.create(assets.image`Mark1`, SpriteKind.Mark)
         tiles.placeOnTile(Mark4F, tiles.getTileLocation(12, 3))
         BreakPoint = sprites.create(assets.image`Mark2`, SpriteKind.Mark)
@@ -1921,24 +1954,7 @@ forever(function () {
             FloorPanels.setImage(assets.image`FloorPanel1`)
             LightEffect.setImage(assets.image`DummyPanel`)
         } else if (MaterJudge == 1) {
-            FloorPanels.setImage(img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                `)
+            FloorPanels.setImage(assets.image`FloorPanel2`)
             LightEffect.setImage(assets.image`Light`)
         } else if (MaterJudge == 2) {
             FloorPanels.setImage(assets.image`FloorPanel3`)
